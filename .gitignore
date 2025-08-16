@@ -38,6 +38,10 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+### Gradle ###
+.gradle/
+build/
+
 ### STS ###
 .apt_generated
 .classpath
@@ -124,3 +128,4 @@ Desktop.ini
 # ESLint
 ######################
 .eslintcache
+.mvn/.develocity/
