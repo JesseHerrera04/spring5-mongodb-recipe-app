@@ -3,47 +3,51 @@
 version: 2.1
 
 executors:
-  maven-executor:
+  gradle-executor:
     docker:
       - image: cimg/openjdk:21.0
     working_directory: ~/spring5-recipe-app
 
 jobs:
   build-and-test:
-    executor: maven-executor
-    environment:
-      MAVEN_OPTS: -Xmx3200m
+    executor: gradle-executor
     steps:
       - checkout
 
-      # Restore Maven dependencies cache
+      # Restore Gradle cache (dependencies and wrapper)
       - restore_cache:
           keys:
-            - maven-{{ checksum "pom.xml" }}
-            - maven-
+            - gradle-deps-{{ checksum "build.gradle" }}
+            - gradle-deps-
 
-      # Install dependencies offline
+      # Make Gradle wrapper executable
       - run:
-          name: Install dependencies
-          command: mvn install -DskipTests
+          name: Make Gradle Wrapper Executable
+          command: chmod +x gradlew
 
-      # Save Maven cache
+      # Build the project (compiles + tests + jar)
+      - run:
+          name: Build Project
+          command: ./gradlew clean build
+
+      # Generate JaCoCo report
+      - run:
+          name: Generate JaCoCo Coverage Report
+          command: ./gradlew jacocoTestReport
+
+      # Save Gradle cache for faster builds next time
       - save_cache:
           paths:
-            - ~/.m2
-          key: maven-{{ checksum "pom.xml" }}
-
-      # Run all tests (unit + integration) and generate JaCoCo coverage
-      - run:
-          name: Run Tests with JaCoCo
-          command: mvn verify jacoco:report
+            - ~/.gradle/caches
+            - ~/.gradle/wrapper
+          key: gradle-deps-{{ checksum "build.gradle" }}
 
       # Save JaCoCo HTML reports as artifacts
       - store_artifacts:
-          path: target/site/jacoco
+          path: build/reports/jacoco/test/html
           destination: coverage-report
 
-      # Upload to Codecov
+      # Upload coverage to Codecov
       - run:
           name: Upload Coverage to Codecov
           command: bash <(curl -s https://codecov.io/bash)
