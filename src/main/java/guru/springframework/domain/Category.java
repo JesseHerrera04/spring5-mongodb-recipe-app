@@ -1,10 +1,7 @@
 package guru.springframework.domain;
 
-import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import java.util.Set;
 
@@ -16,17 +13,10 @@ import java.util.Set;
 
 @Getter
 @Setter
-@EqualsAndHashCode(exclude = {"recipes"})
-@ToString(exclude = {"recipes"})
-@Entity
 public class Category {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
     private String description;
-
-    @ManyToMany(mappedBy = "categories")
     private Set<Recipe> recipes;
 
 } // End Category Class

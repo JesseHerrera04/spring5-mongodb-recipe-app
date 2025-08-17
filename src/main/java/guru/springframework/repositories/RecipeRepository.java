@@ -9,5 +9,5 @@ import org.springframework.data.repository.CrudRepository;
  * Interface for Recipe Repository
  */
 
-public interface RecipeRepository  extends CrudRepository<Recipe, Long> {
+public interface RecipeRepository  extends CrudRepository<Recipe, String> {
 } // End RecipeRepository Interface

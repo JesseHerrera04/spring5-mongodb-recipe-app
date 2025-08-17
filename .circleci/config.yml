@@ -50,7 +50,7 @@ jobs:
       # Upload coverage to Codecov
       - run:
           name: Upload Coverage to Codecov
-          command: bash <(curl -s https://codecov.io/bash)
+          command: bash <(curl -s https://codecov.io/bash) -B master
 
 workflows:
   build-and-test:

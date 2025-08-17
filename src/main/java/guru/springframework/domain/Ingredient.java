@@ -1,10 +1,7 @@
 package guru.springframework.domain;
 
-import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import java.math.BigDecimal;
 
@@ -16,23 +13,12 @@ import java.math.BigDecimal;
 
 @Getter
 @Setter
-@EqualsAndHashCode(exclude = {"recipe"})
-@ToString(exclude = {"recipe"})
-@Entity
 public class Ingredient {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    private String id;
     private String description;
     private BigDecimal amount;
-
-    // Many ingredients can have the same uom, fails if 1-1 in later Spring versions
-    @ManyToOne(fetch = FetchType.EAGER)
     private UnitOfMeasure uom;
-
-    @ManyToOne
     private Recipe recipe;
 
     // Null constructor
