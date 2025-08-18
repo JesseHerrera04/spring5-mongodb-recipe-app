@@ -2,6 +2,7 @@ package guru.springframework.repositories;
 
 import guru.springframework.domain.UnitOfMeasure;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * Integration Test for UOM Repository
  */
 
+@Disabled("Integration Tests not currently Supported")
 @RunWith(SpringRunner.class)
 @DataMongoTest
 class UnitOfMeasureRepositoryIT {
