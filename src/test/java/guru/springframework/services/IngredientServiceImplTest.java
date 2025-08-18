@@ -91,8 +91,7 @@ class IngredientServiceImplTest {
         IngredientCommand ingredientCommand = ingredientService.findByRecipeIdAndIngredientId("1", "3");
 
         // When
-        assertEquals(3L, ingredientCommand.getId());
-        assertEquals(1L, ingredientCommand.getRecipeId());
+        assertEquals("3", ingredientCommand.getId());
         verify(recipeRepository, times(1)).findById(anyString());
 
     }

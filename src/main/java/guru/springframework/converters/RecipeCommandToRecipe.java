@@ -51,7 +51,6 @@ public class RecipeCommandToRecipe implements Converter<RecipeCommand, Recipe> {
         if(source.getNotes() != null) {
             Notes notes = notesConverter.convert(source.getNotes());
             if(notes != null) {
-                notes.setRecipe(recipe);
                 recipe.setNotes(notes);
             }
         }
