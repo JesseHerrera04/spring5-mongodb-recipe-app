@@ -5,7 +5,7 @@ version: 2.1
 executors:
   gradle-executor:
     docker:
-      - image: cimg/openjdk:21.0
+      - image: cimg/openjdk:24.0
     working_directory: ~/spring5-recipe-app
 
 jobs:
@@ -19,6 +19,11 @@ jobs:
           keys:
             - gradle-deps-{{ checksum "build.gradle" }}
             - gradle-deps-
+
+      # Restore flapdoodle embedded mongo binaries (if cached)
+      - restore_cache:
+          keys:
+            - v1-flapdoodle-{{ arch }}
 
       # Make Gradle wrapper executable
       - run:
@@ -41,6 +46,12 @@ jobs:
             - ~/.gradle/caches
             - ~/.gradle/wrapper
           key: gradle-deps-{{ checksum "build.gradle" }}
+
+      # Save flapdoodle binaries cache
+      - save_cache:
+          paths:
+            - ~/.embedmongo
+          key: v1-flapdoodle-{{ arch }}
 
       # Save JaCoCo HTML reports as artifacts
       - store_artifacts:

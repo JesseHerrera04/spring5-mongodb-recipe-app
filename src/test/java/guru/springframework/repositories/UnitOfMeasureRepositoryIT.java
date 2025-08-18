@@ -19,7 +19,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * Integration Test for UOM Repository
  */
 
-//@Disabled("Integration Tests not currently Supported")
 @ExtendWith(SpringExtension.class)
 @DataMongoTest
 class UnitOfMeasureRepositoryIT {
